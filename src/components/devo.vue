@@ -1,10 +1,10 @@
 <template>
-    <button>{{ addCard }}</button>
+    <button>{{ next }}</button>
 </template>
 
 <script setup>
 defineProps({
-    addCard: String
+    next: String
 })
 </script>
 
