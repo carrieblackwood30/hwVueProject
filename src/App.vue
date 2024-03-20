@@ -1,20 +1,63 @@
 <template>
-  <img :src="hokage[sum]" alt="hokages" width="400"><br>
-  <devo next="prev" @click="prev"></devo>
-  <button @click="next">next</button>
+
+  <div class="cards">
+    <div v-for="item in items" :key="item">
+      <h4>{{ item.name }}</h4>
+      <p>{{ item.cost }}</p>
+      <button @click="plus(item)">{{ item.button }}</button>
+    </div>
+  </div>
+
+  <h3>cost is:{{ num }}</h3>
+
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import devo from './components/devo.vue';
-const hokage = reactive([
-  "https://wallpaperaccess.com/full/5848355.png",
-  "https://i.ytimg.com/vi/kqr2QuM8XXo/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AHmCYAC0AWKAgwIABABGGUgWyhNMA8=&rs=AOn4CLD5XJcAaRoihjKonmJpLfNtRNgBEg",
-  "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Collage-Maker-08-Aug-2022-0650-AM.jpg",
-  "https://wallpapers.com/images/hd/fourth-hokage-1280-x-936-wallpaper-vspp9piq5py2nbim.jpg",
-  "https://i.ytimg.com/vi/5v92hLp9OAI/maxresdefault.jpg"
+import { computed, reactive, ref } from 'vue';
+
+let num = ref(0)
+
+const items = reactive([
+  {
+    name: "Iphone",
+    cost: 1000,
+    button: "add item"
+  },
+  {
+    name: "macbook",
+    cost: 3000,
+    button: "add item"
+  },
+  {
+    name: "watch",
+    cost: 200,
+    button: "add item"
+  }
 ])
-let sum = ref(0)
-let next = () => sum.value > hokage.length - 2 ? sum.value = 0 : sum.value += 1
-let prev = () => sum.value < 1 ? sum.value = hokage.length - 1 : sum.value -= 1
+
+const plus = (item) => {
+  console.log(`${item.name}`)
+
+  const compPlus = computed(
+    num.value = num.value + item.cost
+  )
+  console.log(compPlus)
+  return compPlus
+}
+
 </script>
+
+<style scoped>
+.cards {
+  display: flex;
+  gap: 1rem;
+}
+
+.cards div {
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+</style>
