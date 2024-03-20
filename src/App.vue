@@ -1,41 +1,63 @@
 <template>
 
-  <button @click="createImg">add card</button><br>
-
-  <div v-for="img in cards">
-    <img v-bind:src="img" width="100%" height="100%">
+  <div class="cards">
+    <div v-for="item in items" :key="item">
+      <h4>{{ item.name }}</h4>
+      <p>{{ item.cost }}</p>
+      <button @click="plus(item)">{{ item.button }}</button>
+    </div>
   </div>
+
+  <h3>cost is:{{ num }}</h3>
 
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
-const cards = ref([])
+let num = ref(0)
 
-function createImg() {
-  let newImg = prompt("add a link of image")
-  let checkEnd = newImg.split('.')
-  console.log(checkEnd[checkEnd.length - 1])
-  if (newImg !== '') {
-    if (checkEnd[checkEnd.length - 1] === 'jpg' || checkEnd[checkEnd.length - 1] === 'png' || checkEnd[checkEnd.length - 1] === 'jpeg') {
-      cards.value.push(newImg)
-    }
-    else (alert('ссылка должна быть на изображение'))
-  } else (alert('поле пустое!'))
+const items = reactive([
+  {
+    name: "Iphone",
+    cost: 1000,
+    button: "add item"
+  },
+  {
+    name: "macbook",
+    cost: 3000,
+    button: "add item"
+  },
+  {
+    name: "watch",
+    cost: 200,
+    button: "add item"
+  }
+])
+
+const plus = (item) => {
+  console.log(`${item.name}`)
+
+  const compPlus = computed(
+    num.value = num.value + item.cost
+  )
+  console.log(compPlus)
+  return compPlus
 }
 
 </script>
 
 <style scoped>
-div {
-  border: 1px solid;
-  width: fit-content;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 2rem;
+.cards {
+  display: flex;
+  gap: 1rem;
+}
+
+.cards div {
+  border: 1px solid black;
   padding: 1rem;
-  object-fit: contain;
-  width: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
